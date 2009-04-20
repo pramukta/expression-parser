@@ -77,70 +77,71 @@
   *|;
 }%%
 
-class Expr
-  def initialize
-    @queue = []; @stack = []
-    @last_token_type = :nil
-    @mark = 0;
-    %% write data;
-  end
-    
-  def parse(data)
-    # this eof definition is very important
-    eof = data.length
-    @last_token_type = :nil
-    
-    
-    %% write init;
-    %% write exec;
-    
-    while(!@stack.empty?) do
-      @queue << @stack.pop
+module Pixelate
+  class ExprMachine
+    def initialize
+      @queue = []; @stack = []
+      @last_token_type = :nil
+      @mark = 0;
+      %% write data;
     end
-    puts data
-    puts @queue.inspect
-  end
-  
-  private
-  def precedence(token)
-    PRECEDENCE[token] || 100
-  end
-  
-  def validate_token(current, previous, context, position)
-    unless VALID_TOKEN_TABLE[TOKEN_TYPES[current]][TOKEN_TYPES[previous]]
-      raise ArgumentError, %Q{
-Bad Input: #{current} found after #{previous}
-Position: #{position}
-Context:
-#{context}}
+    
+    def parse(data)
+      # this eof definition is very important
+      eof = data.length
+      @last_token_type = :nil
+      @queue.clear
+    
+      %% write init;
+      %% write exec;
+    
+      while(!@stack.empty?) do
+        @queue << @stack.pop
+      end
+      # puts data
+      # puts @queue.inspect
+      return @queue
     end
-  end
   
-  TOKEN_TYPES = {:nil => 0, :literal => 1, :reference => 2, 
-                 :operator => 3, :left_paren => 4, :right_paren => 5 }
-  # shouldn't this be able to be expressed via the ragel language itself?
-  # VALID_TOKEN_TABLE[TOKEN_TYPE, PREVIOUS_TOKEN_TYPE]
-  VALID_TOKEN_TABLE = [[true, true, true, true, true, true], # nil
-                       [true, false, false, true, true, false], # literal
-                       [true, false, false, true, true, false], # reference
-                       [false, true, true, false, false, true], # operator
-                       [true, false, false, true, true, false], # left_paren
-                       [false, true, true, false, false, true]] # right_paren
+    private
+    def precedence(token)
+      PRECEDENCE[token] || 100
+    end
+  
+    def validate_token(current, previous, context, position)
+      unless VALID_TOKEN_TABLE[TOKEN_TYPES[current]][TOKEN_TYPES[previous]]
+        raise ArgumentError, %Q{
+  Bad Input: #{current} found after #{previous}
+  Position: #{position}
+  Context:
+  #{context}}
+      end
+    end
+  
+    TOKEN_TYPES = {:nil => 0, :literal => 1, :reference => 2, 
+                   :operator => 3, :left_paren => 4, :right_paren => 5 }
+    # shouldn't this be able to be expressed via the ragel language itself?
+    # VALID_TOKEN_TABLE[TOKEN_TYPE, PREVIOUS_TOKEN_TYPE]
+    VALID_TOKEN_TABLE = [[true, true, true, true, true, true], # nil
+                         [true, false, false, true, true, false], # literal
+                         [true, false, false, true, true, false], # reference
+                         [false, true, true, false, false, true], # operator
+                         [true, false, false, true, true, false], # left_paren
+                         [false, true, true, false, false, true]] # right_paren
 
-  PRECEDENCE = {'+'.to_sym => 1, '-'.to_sym => 1, '*'.to_sym => 2, 
-                '/'.to_sym => 2, '('.to_sym => -1 }
+    PRECEDENCE = {'+'.to_sym => 1, '-'.to_sym => 1, '*'.to_sym => 2, 
+                  '/'.to_sym => 2, '('.to_sym => -1 }
+  end
 end
 
-e = ExprMachine.new
-e.parse("3 + 4 * 2 / ( 1 - 5 )")
-puts '-'*80
-e.parse('A + (1.01*(B - 15.667))/2 + C/(2 + D)')
-puts '-'*80
-e.parse('A + 1.5*(another - 1)')
-puts '-'*80
-e.parse('A + 1.5*(AN INVALID STATEMENT - 1)')
-
-
+  # e = ExprMachine.new
+  # e.parse("3 + 4 * 2 / ( 1 - 5 )")
+  # puts '-'*80
+  # e.parse('A + (1.01*(B - 15.667))/2 + C/(2 + D)')
+  # puts '-'*80
+  # e.parse('A + 1.5*(another - 1)')
+  # puts '-'*80
+  # e.parse('A + 1.5*(AN INVALID STATEMENT - 1)')
 
 
 

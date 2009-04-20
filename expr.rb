@@ -2,16 +2,14 @@
 # line 78 "expr.rl"
 
 
-class Expr
-  def initialize
-    @queue = []
-    @stack = []
-    @precedence = {'+'.to_sym => 1, '-'.to_sym => 1, '*'.to_sym => 2, 
-                   '/'.to_sym => 2, '('.to_sym => -1 }
-    @last_token_type = :nil
-    @mark = 0;
-    
-# line 15 "expr.rb"
+module Pixelate
+  class ExprMachine
+    def initialize
+      @queue = []; @stack = []
+      @last_token_type = :nil
+      @mark = 0;
+      
+# line 13 "expr.rb"
 class << self
 	attr_accessor :_expr_actions
 	private :_expr_actions, :_expr_actions=
@@ -130,24 +128,17 @@ class << self
 end
 self.expr_en_main = 1;
 
-# line 89 "expr.rl"
-  end
-  
-  def parse(data)
-    # while !data.empty? do
-      data = parse_chunk(data)
-      puts data
-    # end
-  end
-  
-  def parse(data)
-    # this eof definition is very important
-    eof = data.length
-    @last_token_type = :nil
+# line 87 "expr.rl"
+    end
     
+    def parse(data)
+      # this eof definition is very important
+      eof = data.length
+      @last_token_type = :nil
+      @queue.clear
     
-    
-# line 151 "expr.rb"
+      
+# line 142 "expr.rb"
 begin
 	p ||= 0
 	pe ||= data.length
@@ -156,9 +147,9 @@ begin
 	te = nil
 	act = 0
 end
-# line 105 "expr.rl"
-    
-# line 162 "expr.rb"
+# line 96 "expr.rl"
+      
+# line 153 "expr.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -189,7 +180,7 @@ begin
 ts = p
 		end
 # line 1 "expr.rl"
-# line 193 "expr.rb"
+# line 184 "expr.rb"
 		end # from state action switch
 	end
 	if _trigger_goto
@@ -389,7 +380,7 @@ when 16 then
  begin p = ((te))-1; end
 		end
 # line 72 "expr.rl"
-# line 393 "expr.rb"
+# line 384 "expr.rb"
 			end # action switch
 		end
 	end
@@ -410,7 +401,7 @@ when 6 then
 		begin
 ts = nil;		end
 # line 1 "expr.rl"
-# line 414 "expr.rb"
+# line 405 "expr.rb"
 		end # to state action switch
 	end
 	if _trigger_goto
@@ -436,49 +427,55 @@ end
 	end
 	end
 	end
-# line 106 "expr.rl"
+# line 97 "expr.rl"
     
-    while(!@stack.empty?) do
-      @queue << @stack.pop
+      while(!@stack.empty?) do
+        @queue << @stack.pop
+      end
+      # puts data
+      # puts @queue.inspect
+      return @queue
     end
-    puts data
-    puts @queue.inspect
-  end
   
-  def precedence(token)
-    @precedence[token] || 100
-  end
-  
-  def validate_token(current, previous, context, position)
-    unless VALID_TOKEN_TABLE[TOKEN_TYPES[current]][TOKEN_TYPES[previous]]
-      raise ArgumentError, %Q{
-Bad Input: #{current} found after #{previous}
-Position: #{position}
-Context:
-#{context}}
+    private
+    def precedence(token)
+      PRECEDENCE[token] || 100
     end
-  end
   
-  TOKEN_TYPES = {:nil => 0, :literal => 1, :reference => 2, 
-                 :operator => 3, :left_paren => 4, :right_paren => 5 }
-  # VALID_TOKEN_TABLE[TOKEN_TYPE, PREVIOUS_TOKEN_TYPE]
-  VALID_TOKEN_TABLE = [[true, true, true, true, true, true], # nil
-                       [true, false, false, true, true, false], # literal
-                       [true, false, false, true, true, false], # reference
-                       [false, true, true, false, false, true], # operator
-                       [true, false, false, true, true, false], # left_paren
-                       [false, true, true, false, false, true]] # right_paren
+    def validate_token(current, previous, context, position)
+      unless VALID_TOKEN_TABLE[TOKEN_TYPES[current]][TOKEN_TYPES[previous]]
+        raise ArgumentError, %Q{
+  Bad Input: #{current} found after #{previous}
+  Position: #{position}
+  Context:
+  #{context}}
+      end
+    end
+  
+    TOKEN_TYPES = {:nil => 0, :literal => 1, :reference => 2, 
+                   :operator => 3, :left_paren => 4, :right_paren => 5 }
+    # shouldn't this be able to be expressed via the ragel language itself?
+    # VALID_TOKEN_TABLE[TOKEN_TYPE, PREVIOUS_TOKEN_TYPE]
+    VALID_TOKEN_TABLE = [[true, true, true, true, true, true], # nil
+                         [true, false, false, true, true, false], # literal
+                         [true, false, false, true, true, false], # reference
+                         [false, true, true, false, false, true], # operator
+                         [true, false, false, true, true, false], # left_paren
+                         [false, true, true, false, false, true]] # right_paren
+
+    PRECEDENCE = {'+'.to_sym => 1, '-'.to_sym => 1, '*'.to_sym => 2, 
+                  '/'.to_sym => 2, '('.to_sym => -1 }
+  end
 end
 
-e = Expr.new
-e.parse("3 + 4 * 2 / ( 1 - 5 )")
-puts '-'*80
-e.parse('A + (1.01*(B - 15.667))/2 + C/(2 + D)')
-puts '-'*80
-e.parse('A + 1.5*(another - 1)')
-e.parse('A + 1.5*(AN INVALID STATEMENT - 1)')
-
-
+  # e = ExprMachine.new
+  # e.parse("3 + 4 * 2 / ( 1 - 5 )")
+  # puts '-'*80
+  # e.parse('A + (1.01*(B - 15.667))/2 + C/(2 + D)')
+  # puts '-'*80
+  # e.parse('A + 1.5*(another - 1)')
+  # puts '-'*80
+  # e.parse('A + 1.5*(AN INVALID STATEMENT - 1)')
 
 
 
