@@ -39,7 +39,7 @@ module Pixelate
       return @stack.pop
     end
     
-    OPERATORS = [:+, :-, :*, :/]
+    OPERATORS = [:+, :-, :*, :/, '^'.to_sym]
     FUNCTIONS = []
     
     private          
@@ -54,6 +54,9 @@ module Pixelate
     end
     def /(a,b)
       a / b
+    end
+    def ^(a,b)
+      a ** b
     end
   end
 end

@@ -31,6 +31,13 @@ class InterpreterTest < Test::Unit::TestCase
       assert_equal 2, output
     }
   end
+  def test_power
+    interpreter = Pixelate::Interpreter.new([4,2,'^'.to_sym])
+    assert_nothing_raised {
+      output = interpreter.run
+      assert_equal 16, output
+    }    
+  end
   def test_bad_input
     interpreter = Pixelate::Interpreter.new([8,5,1,:+])
     assert_raises SystemStackError do
