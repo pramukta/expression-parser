@@ -35,6 +35,11 @@ class ExprTest < Test::Unit::TestCase
       assert_raise(ArgumentError) { 
         @parser.parse("3.3.3 + 4")
       }
+      
+      assert_nothing_raised {
+        t = @parser.parse("3 + 4^2 * 10")
+        assert_equal [3.0, 4.0, 2.0, :^, 10.0, :*, :+].to_s, t.to_s
+      }
     end
 end
 

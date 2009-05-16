@@ -34,7 +34,7 @@
   action left_paren_token {
     validate_token(:left_paren, @last_token_type, data, fpc)
     @stack.push '('.to_sym
-    puts @stack.inspect
+    # puts @stack.inspect
     # puts "LEFT PAREN"
     @last_token_type = :left_paren
   }
@@ -62,7 +62,7 @@
 	# match a reference var
 	reference = (upper+) >mark %reference_token;
 	# match an arithmetic operator
-	operator = ('+' | '-' | '*' | '/') >mark %operator_token;
+	operator = ('+' | '-' | '*' | '/' | '^' ) >mark %operator_token;
   left_paren = '(' %left_paren_token;
   right_paren = ')' %right_paren_token;
   
@@ -130,11 +130,12 @@ module Pixelate
                          [false, true, true, false, false, true]] # right_paren
 
     PRECEDENCE = {'+'.to_sym => 1, '-'.to_sym => 1, '*'.to_sym => 2, 
-                  '/'.to_sym => 2, '('.to_sym => -1 }
+                  '/'.to_sym => 2, '^'.to_sym => 3, '('.to_sym => -1 }
   end
 end
 
-  # e = ExprMachine.new
+  # e = Pixelate::ExprMachine.new
+  # puts e.parse("3 + 4^2 * 10").inspect
   # e.parse("3 + 4 * 2 / ( 1 - 5 )")
   # puts '-'*80
   # e.parse('A + (1.01*(B - 15.667))/2 + C/(2 + D)')
@@ -142,7 +143,7 @@ end
   # e.parse('A + 1.5*(another - 1)')
   # puts '-'*80
   # e.parse('A + 1.5*(AN INVALID STATEMENT - 1)')
-
+  
 
 
 

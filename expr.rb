@@ -27,7 +27,7 @@ class << self
 	private :_expr_key_offsets, :_expr_key_offsets=
 end
 self._expr_key_offsets = [
-	0, 2, 13, 13, 13, 13, 16, 18
+	0, 2, 14, 14, 14, 14, 17, 19
 ]
 
 class << self
@@ -35,9 +35,9 @@ class << self
 	private :_expr_trans_keys, :_expr_trans_keys=
 end
 self._expr_trans_keys = [
-	48, 57, 32, 40, 41, 45, 47, 42, 
-	43, 48, 57, 65, 90, 46, 48, 57, 
-	48, 57, 65, 90, 0
+	48, 57, 32, 40, 41, 45, 47, 94, 
+	42, 43, 48, 57, 65, 90, 46, 48, 
+	57, 48, 57, 65, 90, 0
 ]
 
 class << self
@@ -45,7 +45,7 @@ class << self
 	private :_expr_single_lengths, :_expr_single_lengths=
 end
 self._expr_single_lengths = [
-	0, 5, 0, 0, 0, 1, 0, 0
+	0, 6, 0, 0, 0, 1, 0, 0
 ]
 
 class << self
@@ -61,7 +61,7 @@ class << self
 	private :_expr_index_offsets, :_expr_index_offsets=
 end
 self._expr_index_offsets = [
-	0, 2, 11, 12, 13, 14, 17, 19
+	0, 2, 12, 13, 14, 15, 18, 20
 ]
 
 class << self
@@ -70,9 +70,9 @@ class << self
 end
 self._expr_trans_targs = [
 	6, 1, 1, 2, 3, 4, 4, 4, 
-	5, 7, 1, 1, 1, 1, 0, 5, 
-	1, 6, 1, 7, 1, 1, 1, 1, 
-	1, 1, 1, 1, 0
+	4, 5, 7, 1, 1, 1, 1, 0, 
+	5, 1, 6, 1, 7, 1, 1, 1, 
+	1, 1, 1, 1, 1, 0
 ]
 
 class << self
@@ -81,9 +81,9 @@ class << self
 end
 self._expr_trans_actions = [
 	0, 13, 9, 0, 0, 1, 1, 1, 
-	30, 1, 11, 24, 27, 21, 0, 7, 
-	15, 0, 15, 0, 18, 13, 24, 27, 
-	21, 15, 15, 18, 0
+	1, 30, 1, 11, 24, 27, 21, 0, 
+	7, 15, 0, 15, 0, 18, 13, 24, 
+	27, 21, 15, 15, 18, 0
 ]
 
 class << self
@@ -107,7 +107,7 @@ class << self
 	private :_expr_eof_trans, :_expr_eof_trans=
 end
 self._expr_eof_trans = [
-	22, 0, 23, 24, 25, 27, 27, 28
+	23, 0, 24, 25, 26, 28, 28, 29
 ]
 
 class << self
@@ -298,7 +298,7 @@ when 4 then
 
     validate_token(:left_paren, @last_token_type, data, p)
     @stack.push '('.to_sym
-    puts @stack.inspect
+    # puts @stack.inspect
     # puts "LEFT PAREN"
     @last_token_type = :left_paren
   		end
@@ -464,11 +464,12 @@ end
                          [false, true, true, false, false, true]] # right_paren
 
     PRECEDENCE = {'+'.to_sym => 1, '-'.to_sym => 1, '*'.to_sym => 2, 
-                  '/'.to_sym => 2, '('.to_sym => -1 }
+                  '/'.to_sym => 2, '^'.to_sym => 3, '('.to_sym => -1 }
   end
 end
 
-  # e = ExprMachine.new
+  # e = Pixelate::ExprMachine.new
+  # puts e.parse("3 + 4^2 * 10").inspect
   # e.parse("3 + 4 * 2 / ( 1 - 5 )")
   # puts '-'*80
   # e.parse('A + (1.01*(B - 15.667))/2 + C/(2 + D)')
@@ -476,7 +477,7 @@ end
   # e.parse('A + 1.5*(another - 1)')
   # puts '-'*80
   # e.parse('A + 1.5*(AN INVALID STATEMENT - 1)')
-
+  
 
 
 
