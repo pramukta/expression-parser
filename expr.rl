@@ -1,7 +1,24 @@
 %%{
 	machine expr;
 	
-	action mark { @mark = fpc }
+	action mark { 
+	  @mark = fpc 
+	  # puts @stack.inspect
+	  # puts @queue.inspect
+	}
+  
+  action separator_token {
+    validate_token(:separator, @last_token_type, data, fpc)
+    while(@stack.last != '('.to_sym) do
+      if(@stack.empty?) 
+        raise ArgumentError, "Mismatched Parentheses"
+      end
+      @queue << @stack.pop
+    end
+    @mark = nil
+    @last_token_type = :separator
+  }
+  
   action number_token { 
     validate_token(:literal, @last_token_type, data, fpc)
     number = data[@mark..fpc-1].to_f
@@ -10,22 +27,36 @@
     @last_token_type = :literal
     # puts "LOGGING: #{number}"
   }
-  action reference_token {
-    validate_token(:reference, @last_token_type, data, fpc)
+  action function_or_reference_token {
     reference = data[@mark..fpc-1]
-    @queue << reference
+    if FUNCTION_TOKENS.include?(reference)
+      validate_token(:function, @last_token_type, data, fpc)
+      @stack.push reference
+      @last_token_type = :function
+    else
+      validate_token(:reference, @last_token_type, data, fpc)
+      @queue << reference
+      @last_token_type = :reference
+    end
     @mark = nil
-    @last_token_type = :reference
     # puts "LOGGING: #{reference}"
+    # puts "LOGGING: #{@stack.inspect}"
+    # puts "LOGGING: #{@queue.inspect}"
   }
   action operator_token {
     validate_token(:operator, @last_token_type, data, fpc)
     token = data[@mark..fpc-1].to_sym
     # puts "LOGGING: #{token}"
-    # may need another condition in here
-    if(@stack.last)
+    # I think this is actually the correct condition
+    while(PRECEDENCE.keys.include?(@stack.last) || FUNCTION_TOKENS.include?(@stack.last))
+      # puts "#{precedence(token)} #{precedence(@stack.last)}"
+      # puts @stack.inspect
+      # puts @queue.inspect
       if(precedence(token) <= precedence(@stack.last))
         @queue << @stack.pop
+      else
+        # prevent the infinite loop
+        break
       end
     end
     @stack.push(token)
@@ -40,6 +71,8 @@
   }
   action right_paren_token {
     validate_token(:right_paren, @last_token_type, data, fpc)
+    # puts @stack.inspect
+    # puts @queue.inspect
     # puts "RIGHT PAREN"
     while(@stack.last != '('.to_sym) do
       if(@stack.empty?) 
@@ -48,6 +81,8 @@
       @queue << @stack.pop
     end
     @stack.pop
+    # puts @stack.inspect
+    # puts @queue.inspect
     @last_token_type = :right_paren
   }
   action parse_error {
@@ -59,17 +94,20 @@
   }  
 	# match an integer or float
 	literal = digit+ >mark ('.' digit+)? %number_token;
-	# match a reference var
-	reference = (upper+) >mark %reference_token;
+	# match a reference var or function
+	reference = (upper+) >mark %function_or_reference_token;
+  # match an argument separator
+  separator = ',' >mark %separator_token;
 	# match an arithmetic operator
 	operator = ('+' | '-' | '*' | '/' | '^' ) >mark %operator_token;
   left_paren = '(' %left_paren_token;
   right_paren = ')' %right_paren_token;
-  
+
   main := |* 
     ' ';
     operator;
     literal;
+    separator;
     reference;
     left_paren;
     right_paren;
@@ -87,11 +125,13 @@ module Pixelate
     end
     
     def parse(data)
+      # puts "PARSING: #{data}"
       # this eof definition is very important
       eof = data.length
       @last_token_type = :nil
       @queue.clear
-    
+      @stack.clear
+      
       %% write init;
       %% write exec;
     
@@ -117,17 +157,22 @@ module Pixelate
   #{context}}
       end
     end
-  
+    
+    FUNCTION_TOKENS = ['CORRELATE', 'ABS']
+    
     TOKEN_TYPES = {:nil => 0, :literal => 1, :reference => 2, 
-                   :operator => 3, :left_paren => 4, :right_paren => 5 }
+                   :operator => 3, :left_paren => 4, :right_paren => 5,
+                   :function => 6, :separator => 7 }
     # shouldn't this be able to be expressed via the ragel language itself?
     # VALID_TOKEN_TABLE[TOKEN_TYPE, PREVIOUS_TOKEN_TYPE]
-    VALID_TOKEN_TABLE = [[true, true, true, true, true, true], # nil
-                         [true, false, false, true, true, false], # literal
-                         [true, false, false, true, true, false], # reference
-                         [false, true, true, false, false, true], # operator
-                         [true, false, false, true, true, false], # left_paren
-                         [false, true, true, false, false, true]] # right_paren
+    VALID_TOKEN_TABLE = [[true, true, true, true, true, true, true, true], # nil
+                         [true, false, false, true, true, false, false, true], # literal
+                         [true, false, false, true, true, false, false, true], # reference
+                         [false, true, true, false, false, true, true, false], # operator
+                         [true, false, false, true, true, false, true, true], # left_paren
+                         [false, true, true, false, false, true, false, false], # right_paren
+                         [true, false, false, true, true, false, false, true], # function
+                         [false, true, true, false, false, true, false, false]] # separator
 
     PRECEDENCE = {'+'.to_sym => 1, '-'.to_sym => 1, '*'.to_sym => 2, 
                   '/'.to_sym => 2, '^'.to_sym => 3, '('.to_sym => -1 }

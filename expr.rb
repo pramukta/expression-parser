@@ -1,5 +1,5 @@
 # line 1 "expr.rl"
-# line 78 "expr.rl"
+# line 116 "expr.rl"
 
 
 module Pixelate
@@ -15,11 +15,11 @@ class << self
 	private :_expr_actions, :_expr_actions=
 end
 self._expr_actions = [
-	0, 1, 0, 1, 6, 1, 7, 1, 
-	8, 1, 9, 1, 10, 1, 16, 2, 
-	1, 12, 2, 2, 13, 2, 3, 11, 
-	2, 4, 14, 2, 5, 15, 2, 8, 
-	0
+	0, 1, 0, 1, 7, 1, 8, 1, 
+	9, 1, 10, 1, 11, 1, 18, 2, 
+	1, 14, 2, 2, 13, 2, 3, 15, 
+	2, 4, 12, 2, 5, 16, 2, 6, 
+	17, 2, 9, 0
 ]
 
 class << self
@@ -27,7 +27,8 @@ class << self
 	private :_expr_key_offsets, :_expr_key_offsets=
 end
 self._expr_key_offsets = [
-	0, 2, 14, 14, 14, 14, 17, 19
+	0, 2, 14, 14, 14, 14, 14, 17, 
+	19
 ]
 
 class << self
@@ -35,8 +36,8 @@ class << self
 	private :_expr_trans_keys, :_expr_trans_keys=
 end
 self._expr_trans_keys = [
-	48, 57, 32, 40, 41, 45, 47, 94, 
-	42, 43, 48, 57, 65, 90, 46, 48, 
+	48, 57, 32, 40, 41, 44, 47, 94, 
+	42, 45, 48, 57, 65, 90, 46, 48, 
 	57, 48, 57, 65, 90, 0
 ]
 
@@ -45,7 +46,8 @@ class << self
 	private :_expr_single_lengths, :_expr_single_lengths=
 end
 self._expr_single_lengths = [
-	0, 6, 0, 0, 0, 1, 0, 0
+	0, 6, 0, 0, 0, 0, 1, 0, 
+	0
 ]
 
 class << self
@@ -53,7 +55,8 @@ class << self
 	private :_expr_range_lengths, :_expr_range_lengths=
 end
 self._expr_range_lengths = [
-	1, 3, 0, 0, 0, 1, 1, 1
+	1, 3, 0, 0, 0, 0, 1, 1, 
+	1
 ]
 
 class << self
@@ -61,7 +64,8 @@ class << self
 	private :_expr_index_offsets, :_expr_index_offsets=
 end
 self._expr_index_offsets = [
-	0, 2, 12, 13, 14, 15, 18, 20
+	0, 2, 12, 13, 14, 15, 16, 19, 
+	21
 ]
 
 class << self
@@ -69,10 +73,10 @@ class << self
 	private :_expr_trans_targs, :_expr_trans_targs=
 end
 self._expr_trans_targs = [
-	6, 1, 1, 2, 3, 4, 4, 4, 
-	4, 5, 7, 1, 1, 1, 1, 0, 
-	5, 1, 6, 1, 7, 1, 1, 1, 
-	1, 1, 1, 1, 1, 0
+	7, 1, 1, 2, 3, 5, 4, 4, 
+	4, 6, 8, 1, 1, 1, 1, 1, 
+	0, 6, 1, 7, 1, 8, 1, 1, 
+	1, 1, 1, 1, 1, 1, 1, 0
 ]
 
 class << self
@@ -81,9 +85,9 @@ class << self
 end
 self._expr_trans_actions = [
 	0, 13, 9, 0, 0, 1, 1, 1, 
-	1, 30, 1, 11, 24, 27, 21, 0, 
-	7, 15, 0, 15, 0, 18, 13, 24, 
-	27, 21, 15, 15, 18, 0
+	1, 33, 1, 11, 27, 30, 24, 15, 
+	0, 7, 18, 0, 18, 0, 21, 13, 
+	27, 30, 24, 15, 18, 18, 21, 0
 ]
 
 class << self
@@ -91,7 +95,8 @@ class << self
 	private :_expr_to_state_actions, :_expr_to_state_actions=
 end
 self._expr_to_state_actions = [
-	0, 3, 0, 0, 0, 0, 0, 0
+	0, 3, 0, 0, 0, 0, 0, 0, 
+	0
 ]
 
 class << self
@@ -99,7 +104,8 @@ class << self
 	private :_expr_from_state_actions, :_expr_from_state_actions=
 end
 self._expr_from_state_actions = [
-	0, 5, 0, 0, 0, 0, 0, 0
+	0, 5, 0, 0, 0, 0, 0, 0, 
+	0
 ]
 
 class << self
@@ -107,7 +113,8 @@ class << self
 	private :_expr_eof_trans, :_expr_eof_trans=
 end
 self._expr_eof_trans = [
-	23, 0, 24, 25, 26, 28, 28, 29
+	24, 0, 25, 26, 27, 28, 30, 30, 
+	31
 ]
 
 class << self
@@ -128,17 +135,19 @@ class << self
 end
 self.expr_en_main = 1;
 
-# line 87 "expr.rl"
+# line 125 "expr.rl"
     end
     
     def parse(data)
+      # puts "PARSING: #{data}"
       # this eof definition is very important
       eof = data.length
       @last_token_type = :nil
       @queue.clear
-    
+      @stack.clear
       
-# line 142 "expr.rb"
+      
+# line 151 "expr.rb"
 begin
 	p ||= 0
 	pe ||= data.length
@@ -147,9 +156,9 @@ begin
 	te = nil
 	act = 0
 end
-# line 96 "expr.rl"
+# line 136 "expr.rl"
       
-# line 153 "expr.rb"
+# line 162 "expr.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -174,13 +183,13 @@ begin
 		_nacts -= 1
 		_acts += 1
 		case _expr_actions[_acts - 1]
-			when 7 then
+			when 8 then
 # line 1 "expr.rl"
 		begin
 ts = p
 		end
 # line 1 "expr.rl"
-# line 184 "expr.rb"
+# line 193 "expr.rb"
 		end # from state action switch
 	end
 	if _trigger_goto
@@ -249,10 +258,29 @@ ts = p
 when 0 then
 # line 4 "expr.rl"
 		begin
- @mark = p 		end
+ 
+	  @mark = p 
+	  # puts @stack.inspect
+	  # puts @queue.inspect
+			end
 # line 4 "expr.rl"
 when 1 then
-# line 5 "expr.rl"
+# line 10 "expr.rl"
+		begin
+
+    validate_token(:separator, @last_token_type, data, p)
+    while(@stack.last != '('.to_sym) do
+      if(@stack.empty?) 
+        raise ArgumentError, "Mismatched Parentheses"
+      end
+      @queue << @stack.pop
+    end
+    @mark = nil
+    @last_token_type = :separator
+  		end
+# line 10 "expr.rl"
+when 2 then
+# line 22 "expr.rl"
 		begin
  
     validate_token(:literal, @last_token_type, data, p)
@@ -262,38 +290,52 @@ when 1 then
     @last_token_type = :literal
     # puts "LOGGING: #{number}"
   		end
-# line 5 "expr.rl"
-when 2 then
-# line 13 "expr.rl"
+# line 22 "expr.rl"
+when 3 then
+# line 30 "expr.rl"
 		begin
 
-    validate_token(:reference, @last_token_type, data, p)
     reference = data[@mark..p-1]
-    @queue << reference
+    if FUNCTION_TOKENS.include?(reference)
+      validate_token(:function, @last_token_type, data, p)
+      @stack.push reference
+      @last_token_type = :function
+    else
+      validate_token(:reference, @last_token_type, data, p)
+      @queue << reference
+      @last_token_type = :reference
+    end
     @mark = nil
-    @last_token_type = :reference
     # puts "LOGGING: #{reference}"
+    # puts "LOGGING: #{@stack.inspect}"
+    # puts "LOGGING: #{@queue.inspect}"
   		end
-# line 13 "expr.rl"
-when 3 then
-# line 21 "expr.rl"
+# line 30 "expr.rl"
+when 4 then
+# line 46 "expr.rl"
 		begin
 
     validate_token(:operator, @last_token_type, data, p)
     token = data[@mark..p-1].to_sym
     # puts "LOGGING: #{token}"
-    # may need another condition in here
-    if(@stack.last)
+    # I think this is actually the correct condition
+    while(PRECEDENCE.keys.include?(@stack.last) || FUNCTION_TOKENS.include?(@stack.last))
+      # puts "#{precedence(token)} #{precedence(@stack.last)}"
+      # puts @stack.inspect
+      # puts @queue.inspect
       if(precedence(token) <= precedence(@stack.last))
         @queue << @stack.pop
+      else
+        # prevent the infinite loop
+        break
       end
     end
     @stack.push(token)
     @last_token_type = :operator
   		end
-# line 21 "expr.rl"
-when 4 then
-# line 34 "expr.rl"
+# line 46 "expr.rl"
+when 5 then
+# line 65 "expr.rl"
 		begin
 
     validate_token(:left_paren, @last_token_type, data, p)
@@ -302,12 +344,14 @@ when 4 then
     # puts "LEFT PAREN"
     @last_token_type = :left_paren
   		end
-# line 34 "expr.rl"
-when 5 then
-# line 41 "expr.rl"
+# line 65 "expr.rl"
+when 6 then
+# line 72 "expr.rl"
 		begin
 
     validate_token(:right_paren, @last_token_type, data, p)
+    # puts @stack.inspect
+    # puts @queue.inspect
     # puts "RIGHT PAREN"
     while(@stack.last != '('.to_sym) do
       if(@stack.empty?) 
@@ -316,23 +360,25 @@ when 5 then
       @queue << @stack.pop
     end
     @stack.pop
+    # puts @stack.inspect
+    # puts @queue.inspect
     @last_token_type = :right_paren
   		end
-# line 41 "expr.rl"
-when 8 then
-# line 1 "expr.rl"
-		begin
-te = p+1
-		end
-# line 1 "expr.rl"
+# line 72 "expr.rl"
 when 9 then
-# line 70 "expr.rl"
+# line 1 "expr.rl"
 		begin
 te = p+1
 		end
-# line 70 "expr.rl"
+# line 1 "expr.rl"
 when 10 then
-# line 53 "expr.rl"
+# line 107 "expr.rl"
+		begin
+te = p+1
+		end
+# line 107 "expr.rl"
+when 11 then
+# line 88 "expr.rl"
 		begin
 te = p+1
  begin 
@@ -343,44 +389,50 @@ te = p+1
               "\n#{data}"
    end
 		end
-# line 53 "expr.rl"
-when 11 then
-# line 71 "expr.rl"
-		begin
-te = p
-p = p - 1;		end
-# line 71 "expr.rl"
+# line 88 "expr.rl"
 when 12 then
-# line 72 "expr.rl"
+# line 108 "expr.rl"
 		begin
 te = p
 p = p - 1;		end
-# line 72 "expr.rl"
+# line 108 "expr.rl"
 when 13 then
-# line 73 "expr.rl"
+# line 109 "expr.rl"
 		begin
 te = p
 p = p - 1;		end
-# line 73 "expr.rl"
+# line 109 "expr.rl"
 when 14 then
-# line 74 "expr.rl"
+# line 110 "expr.rl"
 		begin
 te = p
 p = p - 1;		end
-# line 74 "expr.rl"
+# line 110 "expr.rl"
 when 15 then
-# line 75 "expr.rl"
+# line 111 "expr.rl"
 		begin
 te = p
 p = p - 1;		end
-# line 75 "expr.rl"
+# line 111 "expr.rl"
 when 16 then
-# line 72 "expr.rl"
+# line 112 "expr.rl"
+		begin
+te = p
+p = p - 1;		end
+# line 112 "expr.rl"
+when 17 then
+# line 113 "expr.rl"
+		begin
+te = p
+p = p - 1;		end
+# line 113 "expr.rl"
+when 18 then
+# line 109 "expr.rl"
 		begin
  begin p = ((te))-1; end
 		end
-# line 72 "expr.rl"
-# line 384 "expr.rb"
+# line 109 "expr.rl"
+# line 436 "expr.rb"
 			end # action switch
 		end
 	end
@@ -396,12 +448,12 @@ when 16 then
 		_nacts -= 1
 		_acts += 1
 		case _expr_actions[_acts - 1]
-when 6 then
+when 7 then
 # line 1 "expr.rl"
 		begin
 ts = nil;		end
 # line 1 "expr.rl"
-# line 405 "expr.rb"
+# line 457 "expr.rb"
 		end # to state action switch
 	end
 	if _trigger_goto
@@ -427,7 +479,7 @@ end
 	end
 	end
 	end
-# line 97 "expr.rl"
+# line 137 "expr.rl"
     
       while(!@stack.empty?) do
         @queue << @stack.pop
@@ -451,17 +503,22 @@ end
   #{context}}
       end
     end
-  
+    
+    FUNCTION_TOKENS = ['CORRELATE', 'ABS']
+    
     TOKEN_TYPES = {:nil => 0, :literal => 1, :reference => 2, 
-                   :operator => 3, :left_paren => 4, :right_paren => 5 }
+                   :operator => 3, :left_paren => 4, :right_paren => 5,
+                   :function => 6, :separator => 7 }
     # shouldn't this be able to be expressed via the ragel language itself?
     # VALID_TOKEN_TABLE[TOKEN_TYPE, PREVIOUS_TOKEN_TYPE]
-    VALID_TOKEN_TABLE = [[true, true, true, true, true, true], # nil
-                         [true, false, false, true, true, false], # literal
-                         [true, false, false, true, true, false], # reference
-                         [false, true, true, false, false, true], # operator
-                         [true, false, false, true, true, false], # left_paren
-                         [false, true, true, false, false, true]] # right_paren
+    VALID_TOKEN_TABLE = [[true, true, true, true, true, true, true, true], # nil
+                         [true, false, false, true, true, false, false, true], # literal
+                         [true, false, false, true, true, false, false, true], # reference
+                         [false, true, true, false, false, true, true, false], # operator
+                         [true, false, false, true, true, false, true, true], # left_paren
+                         [false, true, true, false, false, true, false, false], # right_paren
+                         [true, false, false, true, true, false, false, true], # function
+                         [false, true, true, false, false, true, false, false]] # separator
 
     PRECEDENCE = {'+'.to_sym => 1, '-'.to_sym => 1, '*'.to_sym => 2, 
                   '/'.to_sym => 2, '^'.to_sym => 3, '('.to_sym => -1 }
