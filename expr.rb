@@ -1,5 +1,5 @@
 # line 1 "expr.rl"
-# line 116 "expr.rl"
+# line 117 "expr.rl"
 
 
 module ExpressionParser
@@ -16,10 +16,10 @@ class << self
 end
 self._expr_actions = [
 	0, 1, 0, 1, 7, 1, 8, 1, 
-	9, 1, 10, 1, 11, 1, 18, 2, 
-	1, 14, 2, 2, 13, 2, 3, 15, 
-	2, 4, 12, 2, 5, 16, 2, 6, 
-	17, 2, 9, 0
+	9, 1, 10, 1, 11, 1, 18, 1, 
+	19, 2, 1, 14, 2, 2, 13, 2, 
+	3, 15, 2, 4, 12, 2, 5, 16, 
+	2, 6, 17, 2, 9, 0
 ]
 
 class << self
@@ -27,8 +27,8 @@ class << self
 	private :_expr_key_offsets, :_expr_key_offsets=
 end
 self._expr_key_offsets = [
-	0, 2, 14, 14, 14, 14, 14, 17, 
-	19
+	0, 2, 18, 18, 18, 18, 18, 21, 
+	23, 24, 26, 27
 ]
 
 class << self
@@ -36,9 +36,10 @@ class << self
 	private :_expr_trans_keys, :_expr_trans_keys=
 end
 self._expr_trans_keys = [
-	48, 57, 32, 40, 41, 44, 47, 94, 
-	42, 45, 48, 57, 65, 90, 46, 48, 
-	57, 48, 57, 65, 90, 0
+	48, 57, 32, 40, 41, 44, 47, 60, 
+	62, 94, 101, 110, 42, 45, 48, 57, 
+	65, 90, 46, 48, 57, 48, 57, 61, 
+	65, 90, 113, 101, 0
 ]
 
 class << self
@@ -46,8 +47,8 @@ class << self
 	private :_expr_single_lengths, :_expr_single_lengths=
 end
 self._expr_single_lengths = [
-	0, 6, 0, 0, 0, 0, 1, 0, 
-	0
+	0, 10, 0, 0, 0, 0, 1, 0, 
+	1, 0, 1, 1
 ]
 
 class << self
@@ -56,7 +57,7 @@ class << self
 end
 self._expr_range_lengths = [
 	1, 3, 0, 0, 0, 0, 1, 1, 
-	1
+	0, 1, 0, 0
 ]
 
 class << self
@@ -64,8 +65,8 @@ class << self
 	private :_expr_index_offsets, :_expr_index_offsets=
 end
 self._expr_index_offsets = [
-	0, 2, 12, 13, 14, 15, 16, 19, 
-	21
+	0, 2, 16, 17, 18, 19, 20, 23, 
+	25, 27, 29, 31
 ]
 
 class << self
@@ -73,10 +74,12 @@ class << self
 	private :_expr_trans_targs, :_expr_trans_targs=
 end
 self._expr_trans_targs = [
-	7, 1, 1, 2, 3, 5, 4, 4, 
-	4, 6, 8, 1, 1, 1, 1, 1, 
-	0, 6, 1, 7, 1, 8, 1, 1, 
-	1, 1, 1, 1, 1, 1, 1, 0
+	7, 1, 1, 2, 3, 5, 4, 8, 
+	8, 4, 10, 11, 4, 6, 9, 1, 
+	1, 1, 1, 1, 0, 6, 1, 7, 
+	1, 4, 1, 9, 1, 4, 1, 4, 
+	1, 1, 1, 1, 1, 1, 1, 1, 
+	1, 1, 1, 1, 0
 ]
 
 class << self
@@ -84,10 +87,12 @@ class << self
 	private :_expr_trans_actions, :_expr_trans_actions=
 end
 self._expr_trans_actions = [
-	0, 13, 9, 0, 0, 1, 1, 1, 
-	1, 33, 1, 11, 27, 30, 24, 15, 
-	0, 7, 18, 0, 18, 0, 21, 13, 
-	27, 30, 24, 15, 18, 18, 21, 0
+	0, 15, 9, 0, 0, 1, 1, 1, 
+	1, 1, 1, 1, 1, 35, 1, 11, 
+	29, 32, 26, 17, 0, 7, 20, 0, 
+	20, 0, 26, 0, 23, 0, 13, 0, 
+	13, 15, 29, 32, 26, 17, 20, 20, 
+	26, 23, 13, 13, 0
 ]
 
 class << self
@@ -96,7 +101,7 @@ class << self
 end
 self._expr_to_state_actions = [
 	0, 3, 0, 0, 0, 0, 0, 0, 
-	0
+	0, 0, 0, 0
 ]
 
 class << self
@@ -105,7 +110,7 @@ class << self
 end
 self._expr_from_state_actions = [
 	0, 5, 0, 0, 0, 0, 0, 0, 
-	0
+	0, 0, 0, 0
 ]
 
 class << self
@@ -113,8 +118,8 @@ class << self
 	private :_expr_eof_trans, :_expr_eof_trans=
 end
 self._expr_eof_trans = [
-	24, 0, 25, 26, 27, 28, 30, 30, 
-	31
+	34, 0, 35, 36, 41, 38, 40, 40, 
+	41, 42, 44, 44
 ]
 
 class << self
@@ -135,7 +140,7 @@ class << self
 end
 self.expr_en_main = 1;
 
-# line 125 "expr.rl"
+# line 126 "expr.rl"
     end
     
     def parse(data)
@@ -147,7 +152,7 @@ self.expr_en_main = 1;
       @stack.clear
       
       
-# line 151 "expr.rb"
+# line 156 "expr.rb"
 begin
 	p ||= 0
 	pe ||= data.length
@@ -156,9 +161,9 @@ begin
 	te = nil
 	act = 0
 end
-# line 136 "expr.rl"
+# line 137 "expr.rl"
       
-# line 162 "expr.rb"
+# line 167 "expr.rb"
 begin
 	_klen, _trans, _keys, _acts, _nacts = nil
 	_goto_level = 0
@@ -189,7 +194,7 @@ begin
 ts = p
 		end
 # line 1 "expr.rl"
-# line 193 "expr.rb"
+# line 198 "expr.rb"
 		end # from state action switch
 	end
 	if _trigger_goto
@@ -372,11 +377,11 @@ te = p+1
 		end
 # line 1 "expr.rl"
 when 10 then
-# line 107 "expr.rl"
+# line 108 "expr.rl"
 		begin
 te = p+1
 		end
-# line 107 "expr.rl"
+# line 108 "expr.rl"
 when 11 then
 # line 88 "expr.rl"
 		begin
@@ -391,48 +396,61 @@ te = p+1
 		end
 # line 88 "expr.rl"
 when 12 then
-# line 108 "expr.rl"
+# line 109 "expr.rl"
 		begin
 te = p
 p = p - 1;		end
-# line 108 "expr.rl"
+# line 109 "expr.rl"
 when 13 then
-# line 109 "expr.rl"
+# line 110 "expr.rl"
 		begin
 te = p
 p = p - 1;		end
-# line 109 "expr.rl"
+# line 110 "expr.rl"
 when 14 then
-# line 110 "expr.rl"
+# line 111 "expr.rl"
 		begin
 te = p
 p = p - 1;		end
-# line 110 "expr.rl"
+# line 111 "expr.rl"
 when 15 then
-# line 111 "expr.rl"
+# line 112 "expr.rl"
 		begin
 te = p
 p = p - 1;		end
-# line 111 "expr.rl"
+# line 112 "expr.rl"
 when 16 then
-# line 112 "expr.rl"
+# line 113 "expr.rl"
 		begin
 te = p
 p = p - 1;		end
-# line 112 "expr.rl"
+# line 113 "expr.rl"
 when 17 then
-# line 113 "expr.rl"
+# line 114 "expr.rl"
 		begin
 te = p
 p = p - 1;		end
-# line 113 "expr.rl"
+# line 114 "expr.rl"
 when 18 then
-# line 109 "expr.rl"
+# line 88 "expr.rl"
+		begin
+te = p
+p = p - 1; begin 
+          position = p
+          raise ArgumentError, "Bad Input: Parsing terminated before end of buffer" +
+              "\nPosition: #{position}" +
+              "\nContext:" +
+              "\n#{data}"
+   end
+		end
+# line 88 "expr.rl"
+when 19 then
+# line 110 "expr.rl"
 		begin
  begin p = ((te))-1; end
 		end
-# line 109 "expr.rl"
-# line 436 "expr.rb"
+# line 110 "expr.rl"
+# line 454 "expr.rb"
 			end # action switch
 		end
 	end
@@ -453,7 +471,7 @@ when 7 then
 		begin
 ts = nil;		end
 # line 1 "expr.rl"
-# line 457 "expr.rb"
+# line 475 "expr.rb"
 		end # to state action switch
 	end
 	if _trigger_goto
@@ -479,7 +497,7 @@ end
 	end
 	end
 	end
-# line 137 "expr.rl"
+# line 138 "expr.rl"
     
       while(!@stack.empty?) do
         @queue << @stack.pop
@@ -520,8 +538,10 @@ end
                          [true, false, false, true, true, false, false, true], # function
                          [false, true, true, false, false, true, false, false]] # separator
 
-    PRECEDENCE = {'+'.to_sym => 1, '-'.to_sym => 1, '*'.to_sym => 2, 
-                  '/'.to_sym => 2, '^'.to_sym => 3, '('.to_sym => -1 }
+    PRECEDENCE = {'>'.to_sym => 1, '<'.to_sym => 1, '>='.to_sym => 1,
+                  '<='.to_sym => 1, 'eq'.to_sym => 1, 'ne'.to_sym => 1,
+                  '+'.to_sym => 2, '-'.to_sym => 2, '*'.to_sym => 3, 
+                  '/'.to_sym => 3, '^'.to_sym => 4, '('.to_sym => -1 }
   end
 end
 

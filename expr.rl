@@ -99,7 +99,8 @@
   # match an argument separator
   separator = ',' >mark %separator_token;
 	# match an arithmetic operator
-	operator = ('+' | '-' | '*' | '/' | '^' ) >mark %operator_token;
+	operator = ('+' | '-' | '*' | '/' | '^' | '>' | '<' | '>=' | 
+	            '<=' | 'eq' | 'ne' ) >mark %operator_token;
   left_paren = '(' %left_paren_token;
   right_paren = ')' %right_paren_token;
 
@@ -174,8 +175,10 @@ module ExpressionParser
                          [true, false, false, true, true, false, false, true], # function
                          [false, true, true, false, false, true, false, false]] # separator
 
-    PRECEDENCE = {'+'.to_sym => 1, '-'.to_sym => 1, '*'.to_sym => 2, 
-                  '/'.to_sym => 2, '^'.to_sym => 3, '('.to_sym => -1 }
+    PRECEDENCE = {'>'.to_sym => 1, '<'.to_sym => 1, '>='.to_sym => 1,
+                  '<='.to_sym => 1, 'eq'.to_sym => 1, 'ne'.to_sym => 1,
+                  '+'.to_sym => 2, '-'.to_sym => 2, '*'.to_sym => 3, 
+                  '/'.to_sym => 3, '^'.to_sym => 4, '('.to_sym => -1 }
   end
 end
 
