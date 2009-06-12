@@ -1,5 +1,5 @@
 module Pixelate
-  class Interpreter
+  class BlankInterpreter
     def initialize(token_stream, constants={})
       @token_stream = token_stream
       @mark = 0
@@ -13,7 +13,7 @@ module Pixelate
       end
       e = @token_stream[@mark]
       @mark = @mark + 1
-      if(e.is_a?(Symbol) && (OPERATORS.include?(e) || FUNCTIONS.include?(e)))
+      if(e.is_a?(Symbol) && (self.operators.include?(e) || self.functions.include?(e)))
         # how many arguments does this method take
         args = []
         method(e).arity.times do
@@ -37,26 +37,6 @@ module Pixelate
         raise SystemStackError, "Stack didn't end up empty, script must be corrupt"
       end
       return @stack.pop
-    end
-    
-    OPERATORS = [:+, :-, :*, :/, '^'.to_sym]
-    FUNCTIONS = []
-    
-    private          
-    def +(a,b)
-      a + b
-    end
-    def -(a,b)
-      a - b
-    end
-    def *(a,b)
-      a * b
-    end
-    def /(a,b)
-      a / b
-    end
-    def ^(a,b)
-      a ** b
     end
   end
 end
