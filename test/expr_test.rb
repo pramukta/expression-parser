@@ -49,12 +49,12 @@ class ExprTest < Test::Unit::TestCase
     def test_function_parsing
       assert_nothing_raised {
         t = @parser.parse("3 * CORRELATE(A, B) + 5.0")
-        assert_equal [3.0, "A", "B", "CORRELATE", :*, 5.0, :+], t
+        assert_equal [3.0, "A", "B", :correlate, :*, 5.0, :+], t
       }
 
       assert_nothing_raised {
         t = @parser.parse("3 * CORRELATE(A * ABS(C), B) + 5.0^2")
-        assert_equal [3.0, "A", "C", "ABS", :*, "B", "CORRELATE", :*, 5.0, 2.0, :^, :+], t
+        assert_equal [3.0, "A", "C", :abs, :*, "B", :correlate, :*, 5.0, 2.0, :^, :+], t
       }
     end
 end

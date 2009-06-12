@@ -20,7 +20,7 @@ module ExpressionParser
           args.unshift @stack.pop
         end
         @stack.push method(e).call(*args)
-      elsif(e.is_a?(Symbol) && @constants.keys.include?(e))
+      elsif(e.is_a?(String) && @constants.keys.include?(e))
           @stack.push @constants[e]
       elsif(!e.is_a?(Symbol))
         @stack.push e

@@ -31,7 +31,7 @@
     reference = data[@mark..fpc-1]
     if FUNCTION_TOKENS.include?(reference)
       validate_token(:function, @last_token_type, data, fpc)
-      @stack.push reference
+      @stack.push reference.downcase.to_sym
       @last_token_type = :function
     else
       validate_token(:reference, @last_token_type, data, fpc)
@@ -48,7 +48,7 @@
     token = data[@mark..fpc-1].to_sym
     # puts "LOGGING: #{token}"
     # I think this is actually the correct condition
-    while(PRECEDENCE.keys.include?(@stack.last) || FUNCTION_TOKENS.include?(@stack.last))
+    while(PRECEDENCE.keys.include?(@stack.last) || FUNCTION_TOKENS.include?(@stack.last.to_s.upcase))
       # puts "#{precedence(token)} #{precedence(@stack.last)}"
       # puts @stack.inspect
       # puts @queue.inspect
@@ -158,7 +158,7 @@ module ExpressionParser
       end
     end
     
-    FUNCTION_TOKENS = ['CORRELATE', 'ABS']
+    FUNCTION_TOKENS = ['CONVOLVE', 'GAUSSIAN', 'ABS', 'CORRELATE']
     
     TOKEN_TYPES = {:nil => 0, :literal => 1, :reference => 2, 
                    :operator => 3, :left_paren => 4, :right_paren => 5,
