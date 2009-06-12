@@ -2,7 +2,7 @@
 # line 116 "expr.rl"
 
 
-module Pixelate
+module ExpressionParser
   class ExprMachine
     def initialize
       @queue = []; @stack = []

@@ -1,4 +1,4 @@
-module Pixelate
+module ExpressionParser
   module DefaultOperations
     def operators
       [:+, :-, :*, :/, '^'.to_sym]

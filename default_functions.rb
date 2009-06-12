@@ -1,4 +1,4 @@
-module Pixelate
+module ExpressionParser
   module DefaultFunctions
     def functions
       []

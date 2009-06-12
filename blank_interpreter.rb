@@ -1,4 +1,4 @@
-module Pixelate
+module ExpressionParser
   class BlankInterpreter
     def initialize(token_stream, constants={})
       @token_stream = token_stream

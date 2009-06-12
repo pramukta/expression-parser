@@ -4,7 +4,7 @@ require File.expand_path(File.dirname(__FILE__)+'/../expr')
 
 class ExprTest < Test::Unit::TestCase
     def setup
-       @parser = Pixelate::ExprMachine.new
+       @parser = ExpressionParser::ExprMachine.new
     end
     
     def test_parser_exists

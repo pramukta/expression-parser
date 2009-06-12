@@ -115,7 +115,7 @@
   *|;
 }%%
 
-module Pixelate
+module ExpressionParser
   class ExprMachine
     def initialize
       @queue = []; @stack = []
