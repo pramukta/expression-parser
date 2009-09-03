@@ -159,7 +159,7 @@ module ExpressionParser
       end
     end
     
-    FUNCTION_TOKENS = ['CONVOLVE', 'GAUSSIAN', 'ABS', 'CORRELATE']
+    FUNCTION_TOKENS = ['CONVOLVE', 'GAUSSIAN', 'ABS', 'CORRELATE', 'SOBELX', 'SOBELY']
     
     TOKEN_TYPES = {:nil => 0, :literal => 1, :reference => 2, 
                    :operator => 3, :left_paren => 4, :right_paren => 5,
