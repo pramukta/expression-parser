@@ -534,7 +534,7 @@ end
                          [true, false, false, true, true, false, false, true], # reference
                          [false, true, true, false, false, true, true, false], # operator
                          [true, false, false, true, true, false, true, true], # left_paren
-                         [false, true, true, false, false, true, false, false], # right_paren
+                         [false, true, true, false, true, true, false, false], # right_paren
                          [true, false, false, true, true, false, false, true], # function
                          [false, true, true, false, false, true, false, false]] # separator
 
