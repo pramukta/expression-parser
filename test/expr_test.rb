@@ -42,8 +42,11 @@ class ExprTest < Test::Unit::TestCase
       }
     end
     
-    def test_variable_parsing
-      
+    def test_negative_number_parsing
+      assert_nothing_raised {
+        t = @parser.parse("3 + 4 * 2 / ( -1 - 5 )")
+        assert_equal [3.0, 4.0, 2.0, :*, -1.0, 5.0, :-, :/, :+].to_s, t.to_s
+      }
     end
     
     def test_function_parsing

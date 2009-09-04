@@ -106,8 +106,8 @@
 
   main := |* 
     ' ';
-    operator;
     literal;
+    operator;
     separator;
     reference;
     left_paren;
