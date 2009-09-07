@@ -6,6 +6,7 @@ module ExpressionParser
   class DefaultInterpreter < BlankInterpreter
     include DefaultOperations
     include DefaultFunctions
+    include DefaultFunctionTokens
   end
 end
 

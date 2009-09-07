@@ -1,10 +1,10 @@
 require 'test/unit'
 require 'test/unit/ui/console/testrunner'
-require File.expand_path(File.dirname(__FILE__)+'/../expr')
+require File.expand_path(File.dirname(__FILE__)+'/../default_expr_machine')
 
 class ExprTest < Test::Unit::TestCase
     def setup
-       @parser = ExpressionParser::ExprMachine.new
+       @parser = ExpressionParser::DefaultExprMachine.new
     end
     
     def test_parser_exists

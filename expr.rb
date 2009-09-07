@@ -301,7 +301,7 @@ when 3 then
 		begin
 
     reference = data[@mark..p-1]
-    if FUNCTION_TOKENS.include?(reference)
+    if functions.include?(reference.downcase.to_sym)
       validate_token(:function, @last_token_type, data, p)
       @stack.push reference.downcase.to_sym
       @last_token_type = :function
@@ -324,7 +324,7 @@ when 4 then
     token = data[@mark..p-1].to_sym
     # puts "LOGGING: #{token}"
     # I think this is actually the correct condition
-    while(PRECEDENCE.keys.include?(@stack.last) || FUNCTION_TOKENS.include?(@stack.last.to_s.upcase))
+    while(PRECEDENCE.keys.include?(@stack.last) || functions.include?(@stack.last))
       # puts "#{precedence(token)} #{precedence(@stack.last)}"
       # puts @stack.inspect
       # puts @queue.inspect
@@ -521,9 +521,7 @@ end
   #{context}}
       end
     end
-    
-    FUNCTION_TOKENS = ['CONVOLVE', 'GAUSSIAN', 'ABS', 'CORRELATE', 'SOBELX', 'SOBELY']
-    
+        
     TOKEN_TYPES = {:nil => 0, :literal => 1, :reference => 2, 
                    :operator => 3, :left_paren => 4, :right_paren => 5,
                    :function => 6, :separator => 7 }
@@ -534,7 +532,7 @@ end
                          [true, false, false, true, true, false, false, true], # reference
                          [false, true, true, false, false, true, true, false], # operator
                          [true, false, false, true, true, false, true, true], # left_paren
-                         [false, true, true, false, true, true, false, false], # right_paren
+                         [false, true, true, false, false, true, false, false], # right_paren
                          [true, false, false, true, true, false, false, true], # function
                          [false, true, true, false, false, true, false, false]] # separator
 
